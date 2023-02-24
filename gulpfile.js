@@ -19,33 +19,50 @@ const downloadAssetsFromAppPlatformRepo = (done) => {
     const assets = [
       {
         file_name: 'CHANGELOG.md',
+        target_name: '90-changelog.md',
         source: CDN_ROOT_URL,
-        destination: CONTENTS_DIRECTORY
+        destination: REFERENCES_DIRECTORY
+      },
+      {
+        file_name: 'app-data-model-reference.md',
+        target_name: '30-application-data-model.md',
+        source: ASSETS_ROOT_URL,
+        destination: REFERENCES_DIRECTORY
       },
       {
         file_name: 'configuration-reference.md',
+        target_name: '20-configuration.md',
         source: ASSETS_ROOT_URL,
         destination: REFERENCES_DIRECTORY
       },
-      {
-        file_name: '.env-template',
-        source: ASSETS_ROOT_URL,
-        destination: REFERENCES_DIRECTORY
-      },
+      // {
+      //   file_name: 'env-template.md',
+      // target_name: '25-configuration.md',
+      //   source: ASSETS_ROOT_URL,
+      //   destination: REFERENCES_DIRECTORY
+      // },
       {
         file_name: 'events-reference.md',
+        target_name: '40-events.md',
         source: ASSETS_ROOT_URL,
         destination: REFERENCES_DIRECTORY
       },
       {
         file_name: 'services-reference.md',
+        target_name: '10-services.md',
         source: ASSETS_ROOT_URL,
         destination: REFERENCES_DIRECTORY
       }
     ]
-    assets.forEach((asset, i) => {
+    assets.forEach(async (asset, i) => {
       try {
-        const file = fs.createWriteStream(`${asset.destination}/${asset.file_name}`)
+        // const response = fetch(`${asset.source}/${asset.file_name}`)
+        // const data = await response.text()
+        // fs.writeFileSync(`${asset.destination}/${asset.file_name}`, data)
+        // if (i === assets.length - 1) {
+        //   done()
+        // }
+        const file = fs.createWriteStream(`${asset.destination}/${asset.target_name}`)
         https.get(`${asset.source}/${asset.file_name}`, (response) => {
           response.pipe(file)
           if (i === assets.length - 1) {
@@ -53,12 +70,11 @@ const downloadAssetsFromAppPlatformRepo = (done) => {
           }
         })
       } catch (err) {
-        console.error(`Unexpected error in /gulpfile/downloadAssetsFromAppPlatformRepo for asset ${asset.file_name}.`)
+        console.error(`Unexpected error in /gulpfile/downloadAssetsFromAppPlatformRepo for asset ${asset.file_name}.`, err)
       }
     })
   } catch (err) { // Unexpected error
-    console.error('Unexpected error in /gulpfile/downloadAssetsFromAppPlatformRepo.')
-    console.dir(err)
+    console.error('Unexpected error in /gulpfile/downloadAssetsFromAppPlatformRepo.', err)
     done(err)
   }
 }
