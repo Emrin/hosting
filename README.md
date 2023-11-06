@@ -75,7 +75,7 @@ graph TB
     dbapitier --> |query| postgresmain
 
     %% Styles
-
+../hosting_backup/.github ../hosting_backup/.github/workflows ../hosting_backup/drafts ../hosting_backup/package ../hosting_backup/.env.sample ../hosting_backup/docker-compose.yml ../hosting_backup/nginx.conf ../hosting_backup/README.md ../hosting_backup/SECURITY.md
     classDef clients fill:#9099d8, stroke-width:0px;
         class teams clients
         class apps clients
@@ -136,8 +136,8 @@ cd nbold
 
 Download the Docker Compose file and the sample environment variables:
 ```sh
-curl https://assets.nbold.io/self-hosted/docker-compose.yml -O docker-compose.yml
-curl https://assets.nbold.io/self-hosted/.env.sample -O .env
+curl https://hosting.nbold.io/self-hosted/docker-compose.yml -O docker-compose.yml
+curl https://hosting.nbold.io/self-hosted/env.sample -O .env
 ```
 
 ## Minimal configuration
@@ -183,7 +183,7 @@ The latest step is to generate a Microsoft Teams package so that you can access 
 Start by downloading our latest package template from [this URL](https://assets.nbold.io/packages/io.nbold.standalone.self.zip) or from the command line:
 ```sh
 mkdir -p packages/standalone && cd packages/standalone
-curl https://assets.nbold.io/self-hosted/package/io.nbold.standalone.self.zip -o io.nbold.standalone.self.zip
+curl https://hosting.nbold.io/package/io.nbold.standalone.self.zip -o io.nbold.standalone.self.zip
 ```
 
 Then unzip the package manually or from the command line:
