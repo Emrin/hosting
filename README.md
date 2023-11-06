@@ -274,7 +274,9 @@ The only required permanent storage that must be retained (and backed-up) is for
 - The "analytics" database (if the analytics service is enabled) that contains the analytics service configuration
 - The "audit" database (if the audit service is enabled and uses a dedicated database distinct from the primary database) that contains audit logs.
 
-If you're using Docker, we suggest to perform backups of the `data` volumes for each PostgreSQL container.
+If you're using Docker, we suggest to perform backups of the `data` volumes for each PostgreSQL container:
+- `nbold-postgres-primary-data`
+- `nbold-postgres-analytics-data`
 
 ## Monitoring
 In addition to the core containers defined in the Docker Compose file, here are some of the most common additional operations services, for auditing, uptime monitoring and APM (Application Performance Management):
@@ -396,9 +398,8 @@ Notes:
 
 ⚠️ How to secure the metrics endpoint? In production, you can secure the `/health` endpoint to prevent any technical information leak. To do so, define the `PROMETHEUS_EXPORTER_AUTH_TOKEN` property from the [Prometheus Configuration](https://assets.nbold.io/documentation/configuration-reference) options.  
 
-💡 A convenient way to generate a secure token is to use the `openssl` command, such as:
+💡 A convenient way to generate a secure token is to use the [OpenSSL rand](https://www.openssl.org/docs/man1.1.1/man1/rand.html) command, such as:
 ```sh
-# The rand command encodes the produced random bytes in base64. This encoding converts bytes to alphanumeric characters, including the characters `=`, `+`, and `/`. These characters are filtered to have passwords without special characters and prevent url encoding issues. It reduces the random character of the token a little bit, but is not a concern when the token is more than 10 characters.
 openssl rand -base64 29 | tr -d "=+/" | cut -c1-25
 ```
 
