@@ -75,7 +75,6 @@ graph TB
     dbapitier --> |query| postgresmain
 
     %% Styles
-../hosting_backup/.github ../hosting_backup/.github/workflows ../hosting_backup/drafts ../hosting_backup/package ../hosting_backup/.env.sample ../hosting_backup/docker-compose.yml ../hosting_backup/nginx.conf ../hosting_backup/README.md ../hosting_backup/SECURITY.md
     classDef clients fill:#9099d8, stroke-width:0px;
         class teams clients
         class apps clients
