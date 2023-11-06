@@ -29,24 +29,24 @@ graph TB
 
     %% Nodes
 
-    teams(Microsoft Teams client)
-    apps(3rd-party apps, Power Automate)
-    webtier[Web tier]
-    apitier[Api tier]
-    scheduler(Scheduler)
-    jobstier(Jobs)
-    audittier[Audit tier - Jitsu]
-    analyticstier[Analytics tier- Metabase]
-    connectedappstier[Connected-Apps]
-    intercom(Support Chat - Intercom)
-    tray(No-code Automation - Tray.io)
-    sendgrid(Mailing - Sendgrid)
-    dbapitier[DB API- PostgREST]
-    subgraph backingservices[Storage tier]
-        redis[(Cache and Message Queues - Redis)]
-        postgresmain[(Application DB - PostgreSQL)]
-        postgresaudit[(Audit DB - PostgreSQL)]
-        postgresanalytics[(Analytics DB - PostgreSQL)]
+    teams(<font color=black>Microsoft Teams client)
+    apps(<font color=black>3rd-party apps, Power Automate)
+    webtier[<font color=black>Web tier]
+    apitier[<font color=black>Api tier]
+    scheduler(<font color=black>Scheduler)
+    jobstier(<font color=black>Jobs tier)
+    audittier[<font color=black>Audit tier - Jitsu]
+    analyticstier[<font color=black>Analytics tier- Metabase]
+    connectedappstier[<font color=black>Connected-Apps]
+    intercom(<font color=black>Support Chat - Intercom)
+    tray(<font color=black>No-code Automation - Tray.io)
+    sendgrid(<font color=black>Mailing - Sendgrid)
+    dbapitier[<font color=black>DB API- PostgREST]
+    subgraph backingservices[<font color=black>Storage tier]
+        redis[(<font color=black>Cache and Message Queues - Redis)]
+        postgresmain[(<font color=black>Application DB - PostgreSQL)]
+        postgresaudit[(<font color=black>Audit DB - PostgreSQL)]
+        postgresanalytics[(<font color=black>Analytics DB - PostgreSQL)]
     end
     
     %% Links
@@ -101,10 +101,10 @@ graph TB
 **Legend:**
 ```mermaid
 graph TB
-    ext(Client)
-    net(Network component)
-    cont(OCI / Docker container)
-    az(Managed Azure service)
+    ext(<font color=black>Client)
+    net(<font color=black>3rd-party services)
+    cont(<font color=black>OCI / Docker container)
+    az(<font color=black>Storage)
 
     classDef external fill:#9099d8, stroke-width:0px;
         class ext external
@@ -138,9 +138,13 @@ cd hosting
 ```
 
 ## Minimal configuration
-nBold comes with safe defaults, but you still need to define some settings specific to your environment. To do so, open the `.env` configuration file. It defines most of the configurable aspects of your environment.
+nBold comes with safe defaults, but you still need to define some settings specific to your environment. 
+To do so, create a copy of the sample configuration file that defines most of the configurable aspects of your environment.
+```sh
+cp .env.sample .env
+```
 
-Especially, replace `SERVER_HOST` with the actual public host name / FQDN of the server:
+Then, from the `.env` file, replace `SERVER_HOST` with the actual public host name / FQDN of the server:
 
 ```
 WEB_PUBLIC_HOST=SERVER_HOST
@@ -231,6 +235,13 @@ The following nBold containers are completely stateless, and therefore can be sc
 
 The only exception is the scheduler service that MUST only run in one instance.
 
+You can use the `--scale` option of docker compose to specify the number of instances you want for each service, for instance to create 3 instances of the `web` service:
+```sh
+docker-compose ... scale web=3 up -d
+```
+
+See [Docker Service Scale](https://docs.docker.com/engine/reference/commandline/service_scale/) documentation for reference.
+
 For the other third-party services defined in the Docker Compose file, please refer to their respective documentation:
 - Redis: [Scale with Redis Cluster](https://redis.io/docs/management/scaling/)
 - PostgreSQL: [Creating a database cluster](https://www.postgresql.org/docs/current/creating-cluster.html)
@@ -238,6 +249,14 @@ For the other third-party services defined in the Docker Compose file, please re
 - Metabase: [Metabase at scale](https://www.metabase.com/learn/administration/metabase-at-scale)
 
 ## Upgrading
+
+### Upgrading your project
+To upgrade your project, just pull the latest release from GitHub:
+```sh
+git pull
+```
+
+### Upgrading images versions
 nBold follows [semantic versioning](https://semver.org/) format: `MAJOR.MINOR.PATCH`
 
 The default `latest` tag of our Docker images always refers to the latest stable release tag. You can also pin your version, for instance:
@@ -247,6 +266,7 @@ The default `latest` tag of our Docker images always refers to the latest stable
 ⚠️ Backward compatibility: **None of the functionality is backported to older versions**. If you wish to get the latest bug fixes and security updates you need to upgrade to a newer version.
 
 ⚠️ About database schema: Please note that **database schema changes require running migrations when you're upgrading**. However, we consider the schema as an internal API and therefore schema changes are in general not considered a breaking change.
+
 
 ## Backup
 The only required permanent storage that must be retained (and backed-up) is for the databases:
@@ -265,25 +285,25 @@ graph BT
     %% Nodes
 
     subgraph backingservices[ ]
-        redis(Cache and jobs queuing<br />Redis)
-        postgresmain(Configuration database<br />PostgreSQL)
-        postgresevents(Audit database<br />PostgreSQL)
+        redis(<font color=black>Cache and jobs queuing<br />Redis)
+        postgresmain(<font color=black>Configuration database<br />PostgreSQL)
+        postgresevents(<font color=black>Audit database<br />PostgreSQL)
     end
 
-    uptime(Uptime monitoring<br />Monika, EasyProbe...)
+    uptime(<font color=black>Uptime monitoring<br />Monika, EasyProbe...)
 
-    apptiers(Web, Api and Jobs pools)
+    apptiers(<font color=black>Web, Api and Jobs services)
 
-    redis(Cache and jobs queuing<br />Redis)
-    redisexporter(Redis exporter)
+    redis(<font color=black>Cache and jobs queuing<br />Redis)
+    redisexporter(<font color=black>Redis exporter)
 
-    bullexporter(Bull exporter)
+    bullexporter(<font color=black>Bull exporter)
 
-    pgexporter(PostgreSQL exporter)
+    pgexporter(<font color=black>PostgreSQL exporter)
 
-    metrics(Metrics collector<br />Prometheus)
-    metricsdashboard(Metrics Dashboard<br />Grafana)
-    apmdashboard(APM<br />Azure Application Insights, Sentry...)
+    metrics(<font color=black>Metrics collector<br />Prometheus)
+    metricsdashboard(<font color=black>Metrics Dashboard<br />Grafana)
+    apmdashboard(<font color=black>APM<br />Azure Application Insights, Sentry...)
 
     %% Links
     metrics --> metricsdashboard
@@ -303,19 +323,19 @@ graph BT
     postgresevents --> pgexporter
     pgexporter --> metrics
 
-
     %% Styles
 
     classDef containers fill:#ADD8E6, stroke-width:0px;
-        class apptiers containers
         class redisexporter containers
         class bullexporter containers
         class pgexporter containers
         class uptime containers
         class metrics containers
         class metricsdashboard containers
+        class apmdashboard containers
+
     classDef azureservices fill:#FFFFE0, stroke-width:0px;
-        class apmdashboard azureservices
+        class apptiers azureservices
         class appinsights azureservices
         class redis azureservices
         class postgresmain azureservices
