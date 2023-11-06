@@ -122,22 +122,20 @@ graph TB
 ## Prerequisites
 To complete this tutorial, you will need:
 - An installed and running [Docker server](https://www.docker.com/). If your server doesn't come with Docker pre-installed, you can follow [their docs](https://docs.docker.com/get-docker/) to install it.
-- If you are using a Linux system:
-  - [curl](https://github.com/curl/curl). Alternatively, you can use `wget`.
-  - `zip` and `unzip` commands
+- A [GIT client](https://git-scm.com/downloads)
 
 ## Initialize the project
 
-Create a new directory for the project:
+Create a directory for this project
 ```sh
 mkdir nbold
 cd nbold
 ```
 
-Download the Docker Compose file and the sample environment variables:
+Clone this repository and open the directory:
 ```sh
-curl https://hosting.nbold.io/self-hosted/docker-compose.yml -O docker-compose.yml
-curl https://hosting.nbold.io/self-hosted/env.sample -O .env
+git clone https://github.com/nboldhq/hosting.git
+cd hosting
 ```
 
 ## Minimal configuration
@@ -180,18 +178,8 @@ docker ps
 ## Final steps
 The latest step is to generate a Microsoft Teams package so that you can access nBold from Microsof Teams.
 
-Start by downloading our latest package template from [this URL](https://assets.nbold.io/packages/io.nbold.standalone.self.zip) or from the command line:
-```sh
-mkdir -p packages/standalone && cd packages/standalone
-curl https://hosting.nbold.io/package/io.nbold.standalone.self.zip -o io.nbold.standalone.self.zip
-```
 
-Then unzip the package manually or from the command line:
-```sh
-unzip io.nbold.standalone.self.zip
-```
-
-Each package is comprised of the following files:
+Open the `package` directory comprised of the following files:
 - `manifest.json`: The main package manifest
 - `es-es.json`: Spanish localization file
 - `fr-fr.json`: French localization file
