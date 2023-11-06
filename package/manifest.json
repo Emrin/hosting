@@ -1,0 +1,109 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.12",
+  "version": "6.1.0",
+  "id": "[[MICROSOFT_TEAMS_APP_MANIFEST_ID]]",
+  "packageName": "[[MICROSOFT_TEAMS_APP_MANIFEST_PACKAGE_NAME]]",
+  "developer": {
+    "name": "nBold",
+    "websiteUrl": "https://nbold.co",
+    "privacyUrl": "https://nbold.co/legal/privacy",
+    "termsOfUseUrl": "https://nbold.co/legal/tos",
+    "mpnId": "5165407"
+  },
+  "localizationInfo": {
+    "defaultLanguageTag": "en",
+    "additionalLanguages": [
+      {
+        "languageTag": "fr",
+        "file": "fr-fr.json"
+      },
+      {
+        "languageTag": "es",
+        "file": "es-es.json"
+      },
+      {
+        "languageTag": "it",
+        "file": "it-it.json"
+      }
+    ]
+  },
+  "name": {
+    "short": "nBold",
+    "full": "nBold Collaboration Process"
+  },
+  "description": {
+    "short": "nBold is the Collaboration Process technology.",
+    "full": "nBold is the Collaboration Process technology that drives productivity at scale, fuelled by Collaboration Templates, Collaboration Governance, and 3rd party app integrations. In order to use this app, users must have an active nBold accounts, please contact our support team at support@nbold.co for more information."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#000000",
+  "staticTabs": [
+    {
+      "entityId": "io.nbold.home",
+      "scopes": [
+        "personal"
+      ],
+      "context": [
+        "personalTab"
+      ],
+      "name": "Home",
+      "contentUrl": "https://[[NBOLD_APP_PUBLICURL]]/home?package=io.nbold.standalone.prd&packageId=589748de-dc98-4616-9063-e91c629bd1a4&legacy=false",
+      "websiteUrl": "https://docs.nbold.co"
+    },
+    {
+      "entityId": "io.nbold.catalog",
+      "scopes": [
+        "personal"
+      ],
+      "context": [
+        "personalTab"
+      ],
+      "name": "Catalog",
+      "contentUrl": "https://[[NBOLD_APP_PUBLICURL]]/catalog?package=io.nbold.standalone.prd&packageId=589748de-dc98-4616-9063-e91c629bd1a4&legacy=false",
+      "websiteUrl": "https://docs.nbold.co/catalog-manager-guide/collaboration-templates"
+    },
+    {
+      "entityId": "io.nbold.settings",
+      "scopes": [
+        "personal"
+      ],
+      "context": [
+        "personalTab"
+      ],
+      "name": "Settings",
+      "contentUrl": "https://[[NBOLD_APP_PUBLICURL]]/spa",
+      "websiteUrl": "https://docs.nbold.co/administrator-guide"
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "devicePermissions": [
+    "openExternal"
+  ],
+  "validDomains": [
+    "[[MICROSOFT_TEAMS_APP_MANIFEST_VALID_DOMAINS]]"
+  ],
+  "webApplicationInfo": {
+    "id": "[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_ID]]",
+    "resource": "[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_RESOURCE]]"
+  },
+  "showLoadingIndicator": true,
+  "isFullScreen": false,
+  "defaultInstallScope": "personal",
+  "configurableProperties": [
+    "name",
+    "shortDescription",
+    "longDescription",
+    "smallImageUrl",
+    "largeImageUrl",
+    "accentColor"
+  ],
+  "defaultBlockUntilAdminAction": false,
+  "publisherDocsUrl": "https://docs.nbold.co"
+}

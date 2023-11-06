@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.Localization.schema.json",
+  "name.short": "nBold",
+  "name.full": "nBold Processi di Collaborazione",
+  "description.short": "nBold è la Tecnologia che permette di Ottimizzare i Processi di Collaborazione.",
+  "description.full": "nBold permette alle imprese di creare Modelli di Collaborazione per qualsiasi scenario aziendale: Gestione dei Progetti, Trattative Commerciali, Gestione degli Account, Gestione delle Crisi, Processi di onboarding, ecc. Trasforma qualsiasi Playbook Aziendale in uno spazio collaborativo. Ciò permette un alto livello di consistenza nei diversi processi collaborativi e un’efficienza operativa su larga scala. In order to use this app, users must have an active nBold accounts, please contact our support team at support@nbold.co for more information.",
+  "staticTabs[0].name": "Home",
+  "staticTabs[1].name": "Catalogo",
+  "staticTabs[2].name": "Impostazioni"
+}

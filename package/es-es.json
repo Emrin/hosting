@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.Localization.schema.json",
+  "name.short": "nBold",
+  "name.full": "Proceso de Colaboración nBold",
+  "description.short": "nBold es la tecnología de Proceso de Colaboración que estimula la productividad.",
+  "description.full": "nBold permite a las organizaciones crear Plantillas de Colaboración para cualquier escenario: Gestión de Proyectos, Sales Deal Room, Gestión de Cuentas, Respuesta a Crisis, Proceso de Onboarding, etc. Puede traducir cualquier guía de ejecución en un espacio colaborativo. nBold impulsa la consistencia y la eficiencia de la colaboración a escala. In order to use this app, users must have an active nBold accounts, please contact our support team at support@nbold.co for more information.",
+  "staticTabs[0].name": "Inicio",
+  "staticTabs[1].name": "Catálogo",
+  "staticTabs[2].name": "Configuración"
+}

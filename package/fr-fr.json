@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.Localization.schema.json",
+  "name.short": "nBold",
+  "name.full": "nBold, technologie pour vos processus de collaboration.",
+  "description.short": "nBold est la technologie qui optimise vos processus de collaboration.",
+  "description.full": "nBold permet aux organisations de créer des modèles de collaboration pour des scénarios variés: gestion de projets, gestion d&#39;opportunités, gestion de comptes, gestion de crise, accueil des nouveaux employés, etc... Pour utiliser cette application, vous devez disposer d&#39;un compte nBold actif, contactez notre équipe support à support@nbold.co.",
+  "staticTabs[0].name": "Accueil",
+  "staticTabs[1].name": "Catalogue",
+  "staticTabs[2].name": "Configuration"
+}
