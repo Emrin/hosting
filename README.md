@@ -144,7 +144,8 @@ To do so, create a copy of the sample configuration file that defines most of th
 cp .env.sample .env
 ```
 
-Then, from the `.env` file, replace `SERVER_HOST` with the actual public host name / FQDN of the server:
+Then, from the `.env` file, replace `SERVER_HOST` with the actual public host name / FQDN 
+(Fully Qualified Domain Name e.g. example.com) of the server:
 
 ```
 WEB_PUBLIC_HOST=SERVER_HOST
@@ -155,7 +156,11 @@ ANALYTICS_SERVICE_URL=https://SERVER_HOST/analytics
 ANALYTICS_SERVICE_PORTAL=https://SERVER_HOST/analytics-portal
 ```
 
-Also, create as [new Entra ID App Registration](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/walkthrough-register-app-azure-active-directory) and define the app id and app secret accordingly in the configuration:
+Then follow these steps to create a [new Entra ID App Registration](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/walkthrough-register-app-azure-active-directory).
+Paste the Client ID to `MICROSOFT_AZURE_AD_APP_CLIENT_ID`.
+Then go to the Certificates & secrets tab under the Overview tab, in the Manage section, 
+and create a new Client Secret and paste its value to `MICROSOFT_AZURE_AD_APP_CLIENT_SECRET`.
+
 ```
 MICROSOFT_AZURE_AD_APP_CLIENT_ID=
 MICROSOFT_AZURE_AD_APP_CLIENT_SECRET=
@@ -164,16 +169,16 @@ MICROSOFT_AZURE_AD_APP_CLIENT_SECRET=
 > For more information about all the available configuration settings, please refer to [Configuration Reference](https://assets.nbold.io/documentation/configuration-reference)
 
 ## Deploy
-You can deploy nBold using Docker Compose:
+To deploy nBold using Docker Compose, in the project directory copy:
 ```sh
 docker compose --file ./docker-compose.yml -p nbold-selfhosted --env-file ./.env up
 ```
 
-You can verify that the server is running by visiting [http://localhost:8000/home](http://localhost:8000/home) (or the FQDN previously defined) in your web browser.
+You can verify that the server is running by visiting `http://[[SERVER_HOST]]/home` (or the FQDN previously defined) in your web browser.
 
 💡 If you kill the previous command by using `CTRL+C` or similar action, your environment will stop. To keep it running in `detached` mode, add the `--detach` option that starts the containers in the background and leaves them running.`
 
-💡 You can view the the list of running containers with:
+💡 You can view the list of running containers in your docker server or by typing:
 ```sh
 docker ps
 ```
@@ -191,14 +196,14 @@ Open the `package` directory comprised of the following files:
 - `outline.png`: The package outline icon
 
 Then configure the `manifest.json` file by replacing these following placeholders with your actual configuration:
-- `[[MICROSOFT_TEAMS_APP_MANIFEST_ID]]`: A unique id to uniquely identify your package, using UUID version 4 format, such as `ea86caa9-2d39-477a-a9af-5f3f6a3829de`. You can use [this tool](https://www.uuidgenerator.net/version4) to generate a new unique one.
-- `[[MICROSOFT_TEAMS_APP_MANIFEST_PACKAGE_NAME]]`: A unique name for your package. The recommended format is the [Reverse domain name notation](https://en.wikipedia.org/wiki/Reverse_domain_name_notation), such as `com.example.MyProduct`.
-- `[[NBOLD_APP_PUBLICURL]]`: The public URL of your nBold service.
-- `[[MICROSOFT_TEAMS_APP_MANIFEST_VALID_DOMAINS]]`: The list of domains the package is authorized to access.
-- `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_ID]]`: The nBold app Microsoft app registration client ID.
-- `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_RESOURCE]]`: The nBold Microsoft app registration resource URL.
+- `[[MICROSOFT_TEAMS_APP_MANIFEST_ID]]`: A newly generated, unique id to uniquely identify your package, using UUID version 4 format, such as `ea86caa9-2d39-477a-a9af-5f3f6a3829de`. You can use [this tool](https://www.uuidgenerator.net/version4) to generate a new unique one.
+- `[[MICROSOFT_TEAMS_APP_MANIFEST_PACKAGE_NAME]]`: A new and unique name for your package. The recommended format is the [Reverse domain name notation](https://en.wikipedia.org/wiki/Reverse_domain_name_notation), such as `com.example.MyProduct`.
+- `[[NBOLD_APP_PUBLICURL]]`: The public URL of your nBold service. #todo this variable does not exist
+- `[[MICROSOFT_TEAMS_APP_MANIFEST_VALID_DOMAINS]]`: The list of domains the package is authorized to access, accepts regular expressions.
+- `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_ID]]`: The nBold app Microsoft app registration client ID. This is the same as the previous `MICROSOFT_AZURE_AD_APP_CLIENT_ID`.
+- `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_RESOURCE]]`: The nBold Microsoft app registration resource URL. #todo needs clarification
 
-In addition, you can customize the following other properties:
+In addition, you can customize the following other properties: #todo description + example
 - `version`: The package version using the [semver](https://semver.org/) format, such as `1.0.0`.
 - `name`:
   - `short`:
@@ -215,15 +220,19 @@ Save your updates.
 
 Then build your package by adding all the assets to the zip archive, manually or from the command line:
 ```sh
+cd package
+# 💡 The `zip` utility is not installed by default in many Linux distributions, but you can easily install it using your distribution package manager if you need it.
+sudo apt install zip
 zip io.nbold.standalone.self.zip *.json *.png
 ```
 
-You can now go to Microsoft Teams and upload the package as a custom app.
-
-💡 The `zip` utility is not installed by default in many Linux distributions, but you can easily install it using your distribution package manager if you need it.
-```sh
-sudo apt install zip
-```
+You can now go to Microsoft Teams and upload the package as a custom app:
+1. Go to the Apps tab on the bottom of the left sidebar
+2. Select Manage your apps
+3. Upload an app
+4. Upload a customized app
+5. Select folder nbold/hosting/package/io.nbold.standalone.self.zip
+6. Select Add
 
 # Operations
 
