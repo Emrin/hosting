@@ -51,7 +51,7 @@
         "personalTab"
       ],
       "name": "Home",
-      "contentUrl": "https://[[NBOLD_APP_PUBLICURL]]/home?package=io.nbold.standalone.prd&packageId=589748de-dc98-4616-9063-e91c629bd1a4&legacy=false",
+      "contentUrl": "https://[[WEB_PUBLIC_HOST]]/home?package=[[MICROSOFT_TEAMS_APP_MANIFEST_PACKAGE_NAME]]&packageId=[[MICROSOFT_TEAMS_APP_MANIFEST_ID]]&legacy=false",
       "websiteUrl": "https://docs.nbold.co"
     },
     {
@@ -63,7 +63,7 @@
         "personalTab"
       ],
       "name": "Catalog",
-      "contentUrl": "https://[[NBOLD_APP_PUBLICURL]]/catalog?package=io.nbold.standalone.prd&packageId=589748de-dc98-4616-9063-e91c629bd1a4&legacy=false",
+      "contentUrl": "https://[[WEB_PUBLIC_HOST]]/catalog?package=[[MICROSOFT_TEAMS_APP_MANIFEST_PACKAGE_NAME]]&packageId=[[MICROSOFT_TEAMS_APP_MANIFEST_ID]]&legacy=false",
       "websiteUrl": "https://docs.nbold.co/catalog-manager-guide/collaboration-templates"
     },
     {
@@ -75,7 +75,7 @@
         "personalTab"
       ],
       "name": "Settings",
-      "contentUrl": "https://[[NBOLD_APP_PUBLICURL]]/spa",
+      "contentUrl": "https://[[WEB_PUBLIC_HOST]]/spa",
       "websiteUrl": "https://docs.nbold.co/administrator-guide"
     }
   ],
@@ -87,7 +87,8 @@
     "openExternal"
   ],
   "validDomains": [
-    "[[MICROSOFT_TEAMS_APP_MANIFEST_VALID_DOMAINS]]"
+    "[[MICROSOFT_TEAMS_APP_MANIFEST_VALID_DOMAINS]]",
+    "*.nbold.io"
   ],
   "webApplicationInfo": {
     "id": "[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_ID]]",

@@ -1,0 +1,46 @@
+# See: https://jitsu.com/docs/configuration
+server:
+  name: ${env.AUDIT_SERVICE_SERVER_NAME}
+  port: ${env.AUDIT_SERVICE_PORT}
+
+  admin_token: "${env.AUDIT_SERVICE_AUTH_ADMIN_TOKEN}"
+  strict_auth_tokens: false
+  api_keys:
+    - id: nbold
+      client_secret: ${env.AUDIT_SERVICE_AUTH_CLIENT_TOKEN}
+      server_secret: ${env.AUDIT_SERVICE_AUTH_SERVER_TOKEN}
+      origins:
+        - "localhost"
+        - "*.nbold.dev"
+        - "*.nbold.io"
+        - ${env.AUDIT_SERVICE_AUTHORIZED_ORIGIN}
+
+  metrics:
+    relay:
+      disabled: true
+    prometheus:
+      enabled: true
+
+  disable_welcome_page: true
+  disable_version_reminder: true
+
+  telemetry:
+    disabled:
+      usage: true
+
+destinations:
+  audit_db:
+    type: ${env.AUDIT_SERVICE_DB_CLIENT}
+    mode: stream
+    datasource:
+      host: ${env.AUDIT_SERVICE_DB_HOST}
+      db: ${env.AUDIT_SERVICE_DB_NAME}
+      schema: public
+      port: ${env.AUDIT_SERVICE_DB_PORT}
+      username: ${env.AUDIT_SERVICE_DB_USER}
+      password: ${env.AUDIT_SERVICE_DB_PASSWORD}
+      parameters:
+        sslmode: ${env.AUDIT_SERVICE_DB_SSL_MODE}
+    data_layout:
+      table_name_template: "evt_{{$.event_type}}"
+      primary_key_fields: eventn_ctx_event_id
