@@ -198,7 +198,7 @@ Open the `package` directory comprised of the following files:
 Then configure the `manifest.json` file by replacing these following placeholders with your actual configuration:
 - `[[MICROSOFT_TEAMS_APP_MANIFEST_ID]]`: A newly generated, unique id to uniquely identify your package, using UUID version 4 format, such as `ea86caa9-2d39-477a-a9af-5f3f6a3829de`. You can use [this tool](https://www.uuidgenerator.net/version4) to generate a new unique one.
 - `[[MICROSOFT_TEAMS_APP_MANIFEST_PACKAGE_NAME]]`: A new and unique name for your package. The recommended format is the [Reverse domain name notation](https://en.wikipedia.org/wiki/Reverse_domain_name_notation), such as `com.example.MyProduct`.
-- `[[NBOLD_APP_PUBLICURL]]`: The public URL of your nBold service. #todo this variable does not exist
+- `[[WEB_PUBLIC_HOST]]`: The public URL of your nBold service.
 - `[[MICROSOFT_TEAMS_APP_MANIFEST_VALID_DOMAINS]]`: The list of domains the package is authorized to access, accepts regular expressions.
 - `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_ID]]`: The nBold app Microsoft app registration client ID. This is the same as the previous `MICROSOFT_AZURE_AD_APP_CLIENT_ID`.
 - `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_RESOURCE]]`: The nBold Microsoft app registration resource URL. #todo needs clarification

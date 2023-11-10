@@ -232,6 +232,27 @@ services:
     depends_on:
       - nbold-postgres-analytics
 
+  nbold-connected-apps:
+    container_name: nbold-connected-apps
+    image: nboldhq/connected-apps:latest
+    restart: unless-stopped
+    expose:
+      - "3080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3080/health" ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    env_file:
+      - .env
+    environment:
+      - APP_ROLE=web
+      - NBOLD_API=${API_PUBLIC_HOST}/api/v1.0
+    depends_on:
+      - nbold-api
+      - nbold-analytics
+      - nbold-postgres-analytics
+
 volumes:
   nbold-redis-data:
   nbold-postgres-primary-data:
