@@ -95,6 +95,27 @@ services:
       - nbold-postgres-primary
       - nbold-audit
 
+  nbold-connected-apps:
+    container_name: nbold-connected-apps
+    image: nboldhq/connected-apps:development
+    restart: unless-stopped
+    ports:
+      - "3080:3080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3080/health" ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    env_file:
+      - .env
+    environment:
+      - APP_ROLE=connected-apps
+      - NBOLD_API=https://${API_PUBLIC_HOST}/api/v1.0
+    depends_on:
+      - nbold-api
+      - nbold-db-api
+      - nbold-analytics
+
   nbold-back-office:
     container_name: nbold-back-office
     image: nboldhq/nbold:development
@@ -151,6 +172,27 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE_NAME}
+
+  nbold-db-api:
+    container_name: nbold-db-api
+    build:
+      context: ./images/postgrest
+      dockerfile: Dockerfile
+    ports:
+      - "9095:9095"
+    environment:
+      PGRST_ADMIN_SERVER_PORT: 9096
+      PGRST_SERVER_PORT: 9095
+      PGRST_DB_URI: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_DATABASE_NAME}
+      PGRST_DB_SCHEMAS: public
+      PGRST_JWT_SECRET: ${ANALYTICS_SERVICE_POSTGREST_JWT_SECRET}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9096/live"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    depends_on:
+      - nbold-postgres-primary
 
   nbold-audit:
     container_name: nbold-audit
@@ -230,27 +272,6 @@ services:
     expose:
       - "5001"
     depends_on:
-      - nbold-postgres-analytics
-
-  nbold-connected-apps:
-    container_name: nbold-connected-apps
-    image: nboldhq/connected-apps:latest
-    restart: unless-stopped
-    expose:
-      - "3080"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:3080/health" ]
-      interval: 10s
-      timeout: 3s
-      retries: 10
-    env_file:
-      - .env
-    environment:
-      - APP_ROLE=web
-      - NBOLD_API=${API_PUBLIC_HOST}/api/v1.0
-    depends_on:
-      - nbold-api
-      - nbold-analytics
       - nbold-postgres-analytics
 
 volumes:

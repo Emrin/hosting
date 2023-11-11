@@ -122,6 +122,7 @@ graph TB
 To complete this tutorial, you will need:
 - An installed and running [Docker server](https://www.docker.com/). If your server doesn't come with Docker pre-installed, you can follow [their docs](https://docs.docker.com/get-docker/) to install it.
 - A [GIT client](https://git-scm.com/downloads)
+- Access to an Azure portal to create an app registration
 
 ## Initialize the project
 
@@ -136,6 +137,34 @@ Clone this repository and open the directory:
 git clone https://github.com/nboldhq/hosting.git
 cd hosting
 ```
+
+## Create a new app registration
+To securely access your Microsoft 365 environment through the Microsoft Graph APIs, the first step is to create a dedicated app registration. An Azure AD app registration identifies a third-party app such as nBold, and defines the permissions you wan to grant to it.
+
+To create a new app registration, follow these steps:
+* Open your [Azure Active Directory portal](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview)
+* Select `App registrations` from the left menu
+* Click `New registration` from the top bar
+* Give the app a name, such as `nBold`
+* Select the option `Accounts in this organizational directory only`, as you want to restrict access to your own tenant.
+* Add the following this redirection URLs:
+  - https://SERVER_HOST/auth/openid/return
+  - https://SERVER_HOST/auth/openid/returnAdminConsent
+  - https://SERVER_HOST/auth/service_account/return_admin_consent
+  - https://SERVER_HOST/auth/grant/return
+
+* Click `Register`
+* From the `Overview` menu, copy the `Application (client) ID`, and keep it as we're gonna reuse it later.
+* Open the `Authentication` menu
+* Ensure that the `Access tokens (used for implicit flows)` and `ID tokens (used for implicit and hybrid flows)` options are checked from the `Implicit grant and hybrid flows` section, and save your updates if required.
+* Open the `Certificates and secrets` menu and click `New client secret`. A client secret is a kind of a password for your app, so manage it carefully.
+* Give a name to your client secret such as `nBold client secret`
+* Select the expiration option, and click `Add`
+* Copy the `Secret Value` value (be careful, it will only be shown once), and keep it as we're gonna reuse it later.
+
+⚠️ Be careful: Make sure to use the `Secret Value`, not the `Secret ID`!
+
+Once done, follow the [Configure your tab app in Azure AD](https://learn.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/authentication/tab-sso-register-aad) procedure to enable SSO.
 
 ## Minimal configuration
 nBold comes with safe defaults, but you still need to define some settings specific to your environment. 
@@ -156,11 +185,7 @@ ANALYTICS_SERVICE_URL=https://SERVER_HOST/analytics
 ANALYTICS_SERVICE_PORTAL=https://SERVER_HOST/analytics-portal
 ```
 
-Then follow these steps to create a [new Entra ID App Registration](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/walkthrough-register-app-azure-active-directory).
-Paste the Client ID to `MICROSOFT_AZURE_AD_APP_CLIENT_ID`.
-Then go to the Certificates & secrets tab under the Overview tab, in the Manage section, 
-and create a new Client Secret and paste its value to `MICROSOFT_AZURE_AD_APP_CLIENT_SECRET`.
-
+Then use the information previously collected during the creation of the app registration to fill these two options:
 ```
 MICROSOFT_AZURE_AD_APP_CLIENT_ID=
 MICROSOFT_AZURE_AD_APP_CLIENT_SECRET=
@@ -201,20 +226,9 @@ Then configure the `manifest.json` file by replacing these following placeholder
 - `[[WEB_PUBLIC_HOST]]`: The public URL of your nBold service.
 - `[[MICROSOFT_TEAMS_APP_MANIFEST_VALID_DOMAINS]]`: The list of domains the package is authorized to access, accepts regular expressions.
 - `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_ID]]`: The nBold app Microsoft app registration client ID. This is the same as the previous `MICROSOFT_AZURE_AD_APP_CLIENT_ID`.
-- `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_RESOURCE]]`: The nBold Microsoft app registration resource URL. #todo needs clarification
+- `[[MICROSOFT_TEAMS_APP_MANIFEST_WEBAPPLICATIONINFO_RESOURCE]]`: The nBold Microsoft app registration resource URL. It should respect a format like `api://fully-qualified-domain-name.com/{AppID}`.
 
-In addition, you can customize the following other properties: #todo description + example
-- `version`: The package version using the [semver](https://semver.org/) format, such as `1.0.0`.
-- `name`:
-  - `short`:
-  - `full`:
-- `description`:
-  - `short`:
-  - `full`:
-- `icons`:
-  - `color`:
-  - `outline`:
-- `accentColor`:
+Please refer to [App manifest schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema) to see all the options.
 
 Save your updates.
 
@@ -405,7 +419,7 @@ Notes:
 - `route`: will normalize id like route params
 - `status`: will normalize to status code family groups, like `2XX` or `4XX`.
 
-⚠️ How to secure the metrics endpoint? In production, you can secure the `/health` endpoint to prevent any technical information leak. To do so, define the `PROMETHEUS_EXPORTER_AUTH_TOKEN` property from the [Prometheus Configuration](https://assets.nbold.io/documentation/configuration-reference) options.  
+⚠️ How to secure the metrics endpoint? In production, you can secure the `/health` endpoint to prevent any technical information leak, by setting the `PROMETHEUS_EXPORTER_AUTH_TOKEN` property from the [Prometheus Configuration](https://assets.nbold.io/documentation/configuration-reference) options.  
 
 💡 A convenient way to generate a secure token is to use the [OpenSSL rand](https://www.openssl.org/docs/man1.1.1/man1/rand.html) command, such as:
 ```sh
