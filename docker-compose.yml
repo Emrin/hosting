@@ -110,7 +110,7 @@ services:
       - .env
     environment:
       - APP_ROLE=connected-apps
-      - NBOLD_API=https://${API_PUBLIC_HOST}/api/v1.0
+      - NBOLD_API=https://${API_PUBLIC_HOST}/api/v2.0
     depends_on:
       - nbold-api
       - nbold-db-api
