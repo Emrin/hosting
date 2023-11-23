@@ -279,6 +279,12 @@ To upgrade your project, just pull the latest release from GitHub:
 git pull
 ```
 
+Then pull the latest images and recreate the containers:
+```sh
+docker compose pull
+docker compose up -d --force-recreate
+```
+
 ### Upgrading images versions
 nBold follows [semantic versioning](https://semver.org/) format: `MAJOR.MINOR.PATCH`
 
